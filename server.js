@@ -17,6 +17,17 @@ app.get("/emp", (req, res) => {
   } catch (error) {}
 });
 
+app.get("/category", (req, res) => {
+  try {
+    res.status(201).send({
+      message: "This is category feild",
+      data: [
+        "Jewelery,Clothes,Medecine,Electrical,Mobile,Keybaord,Mouse,Cometic",
+      ],
+    });
+  } catch (error) {}
+});
+
 app.listen(process.env.PORT || 5000, () => {
   console.log("Api is running");
 });
