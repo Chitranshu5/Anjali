@@ -11,6 +11,12 @@ app.get("/", (req, res) => {
   });
 });
 
-app.listen(process.env.PORT||5000, () => {
+app.get("/emp", (req, res) => {
+  try {
+    res.send("<h1>HotPic Welcome you </h1>");
+  } catch (error) {}
+});
+
+app.listen(process.env.PORT || 5000, () => {
   console.log("Api is running");
 });
