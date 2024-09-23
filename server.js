@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import { configDotenv } from "dotenv";
 import { connectToDatabase } from "./model/db.js";
-import { Product } from "./model/product.model.js";
+
 import { responseHelper } from "./util/helper.js";
 import { Post } from "./model/post.model.js";
 
