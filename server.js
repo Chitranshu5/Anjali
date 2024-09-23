@@ -4,6 +4,7 @@ import { configDotenv } from "dotenv";
 import { connectToDatabase } from "./model/db.js";
 import { Product } from "./model/product.model.js";
 import { responseHelper } from "./util/helper.js";
+import { Post } from "./model/post.model.js";
 
 const app = express();
 configDotenv();
@@ -156,6 +157,23 @@ app.get("/HindiVartraKatha", async (req, res) => {
     });
   }
 });
+
+
+app.get("/allPost", async(req,res)=>{
+
+  try {
+
+    const data=  await Post.find();
+
+    responseHelper(res,200,true,"All data fetched successfully",{data:data})
+    
+  } catch (error) {
+    console.log(error);
+    responseHelper(res, 500, false, "Error in the API", {
+      error: error.message,
+    });
+  }
+})
 
 
 

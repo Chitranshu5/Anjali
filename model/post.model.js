@@ -1,18 +1,18 @@
 import mongoose from "mongoose";
-
 const postSchema = new mongoose.Schema(
   {
     title: {
       type: String,
+      required: true, // Add validation if needed
     },
-
     content: {
       type: String,
+      required: true,
     },
-    username: {
-      type: String,
+    author: {
+      type: String, // Author's name
+      required: true,
     },
-
     views: { type: Number, default: 0 },
     likes: { type: Number, default: 0 },
     dislikes: { type: Number, default: 0 },
@@ -22,6 +22,6 @@ const postSchema = new mongoose.Schema(
   }
 );
 
-const Post = mongoose.model("Post", postSchema);
+const Post = mongoose.model("posts", postSchema);
 
 export { Post };
