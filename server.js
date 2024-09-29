@@ -38,68 +38,6 @@ app.get("/category", (req, res) => {
   } catch (error) {}
 });
 
-app.post("/createProduct", async (req, res) => {
-  try {
-    console.log(req.body); // Logs the incoming product data
-
-    // Create a new product instance
-    const product = new Product(req.body);
-
-    // Save the product to the database
-    await product.save();
-
-    // Send a success response
-    responseHelper(res, 201, true, "Product registered successfully", {
-      data: product,
-    });
-  } catch (error) {
-    console.log(error); // Log the error for debugging
-
-    // Send an error response
-    responseHelper(res, 500, false, "Error in the API", {
-      error: error.message,
-    });
-  }
-});
-
-
-app.get("/getProducts", async (req, res) => {
-  try {
-    const data = await Product.find({});
-
-    responseHelper(res, 201, true, "Fetch all data successfully", {
-      data: data,
-    });
-  } catch (error) {
-    console.log(error);
-    responseHelper(res, 500, false, "Error in the api", {
-      error: error.message,
-    });
-  }
-});
-
-app.get("/getProductcat", async (req, res) => {
-  try {
-    const { category } = req.query;
-    
-    console.log(category)
-
-    // If category is provided, fetch data by category, otherwise fetch all data
-    const query = category ? { category: category } : {};
-
-    const data = await Product.find(query);
-
-    responseHelper(res, 201, true, "Fetch data successfully", {
-      data: data,
-    });
-  } catch (error) {
-    console.log(error);
-    responseHelper(res, 500, false, "Error in the API", {
-      error: error.message,
-    });
-  }
-});
-
 
 
 app.get("/HindiVartraKatha", async (req, res) => {
@@ -174,6 +112,38 @@ app.get("/allPost", async(req,res)=>{
     });
   }
 })
+
+
+// Fetching the post from the id
+app.get("/SinglePost/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    // Find the post by ID
+    let post = await Post.findById(id);
+
+    // Check if the post exists
+    if (!post) {
+      return responseHelper(res, 404, false, "Post not found", {});
+    }
+
+    // Increment the views by 3
+    post.views = (post.views || 0) + 1; // Ensure views is at least 0 before incrementing
+
+    // Save the updated post with the incremented views
+    await post.save();
+
+    responseHelper(res, 200, true, "Post fetched and views incremented successfully", { post });
+  } catch (error) {
+    console.log(error);
+    responseHelper(res, 500, false, "Error in fetching the post", {
+      error: error.message,
+    
+    });
+  }
+});
+
+
 
 
 

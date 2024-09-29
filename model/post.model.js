@@ -11,7 +11,7 @@ const postSchema = new mongoose.Schema(
     },
     author: {
       type: String, // Author's name
-      required: true,
+    
     },
     views: { type: Number, default: 0 },
     likes: { type: Number, default: 0 },
